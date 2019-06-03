@@ -32,8 +32,7 @@
 
 ### http协议上传文件，数据如何传输？
 - HTTP请求报文分为三部分：请求行、请求头、请求正文
-- post使用设置form的enctype属性的值为multipart/form-data
-
+- 数据发送采用标准HTTP MIME封装格式的扩展Content-Type为multipart/form-data；boundary=%boundaryid%，其中boundaryid值用于标识上传任务，客户端需通过算法生成任务标识保证其唯一性。
 
 ### 说说http协议的优缺点
 
