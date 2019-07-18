@@ -1,8 +1,5 @@
 package cn.tf.zookeeper.distributedLock;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -57,26 +54,6 @@ public class ConcurrentTest {
                 }
             }).start();
         }
-    }
-    /**
-     * 计算平均响应时间
-     */
-    private void getExeTime() {
-        int size = list.size();
-        List<Long> _list = new ArrayList<Long>(size);
-        _list.addAll(list);
-        Collections.sort(_list);
-        long min = _list.get(0);
-        long max = _list.get(size-1);
-        long sum = 0L;
-        for (Long t : _list) {
-            sum += t;
-        }
-        long avg = sum/size;
-        System.out.println("min: " + min);
-        System.out.println("max: " + max);
-        System.out.println("avg: " + avg);
-        System.out.println("err: " + err.get());
     }
 
     public interface ConcurrentTask {
