@@ -1,0 +1,246 @@
+
+/locks/test1_lock_0000000824 节点已经创建好了 
+Thread 11 /locks/test1_lock_0000000824获得锁成功
+/locks/test2_lock_0000000827 节点已经创建好了 
+/locks/test2_lock_0000000825 节点已经创建好了 
+/locks/test2_lock_0000000828 节点已经创建好了 
+/locks/test2_lock_0000000826 节点已经创建好了 
+/locks/test2_lock_0000000829 节点已经创建好了 
+/locks/test2_lock_0000000832 节点已经创建好了 
+/locks/test2_lock_0000000835 节点已经创建好了 
+/locks/test2_lock_0000000830 节点已经创建好了 
+/locks/test2_lock_0000000831 节点已经创建好了 
+/locks/test2_lock_0000000833 节点已经创建好了 
+/locks/test2_lock_0000000834 节点已经创建好了 
+Thread 54 /locks/test2_lock_0000000825获得锁成功
+Thread 54 正在运行
+/locks/test2_lock_0000000836 节点已经创建好了 
+/locks/test2_lock_0000000837 节点已经创建好了 
+/locks/test2_lock_0000000839 节点已经创建好了 
+/locks/test2_lock_0000000838 节点已经创建好了 
+/locks/test2_lock_0000000840 节点已经创建好了 
+/locks/test2_lock_0000000841 节点已经创建好了 
+/locks/test2_lock_0000000842 节点已经创建好了 
+/locks/test2_lock_0000000843 节点已经创建好了 
+/locks/test2_lock_0000000853 节点已经创建好了 
+/locks/test2_lock_0000000851 节点已经创建好了 
+/locks/test2_lock_0000000854 节点已经创建好了 
+/locks/test2_lock_0000000850 节点已经创建好了 
+Thread 48 正在运行
+/locks/test2_lock_0000000844 节点已经创建好了 
+/locks/test2_lock_0000000847 节点已经创建好了 
+Thread 56 正在等待锁 /locks/test2_lock_0000000826
+/locks/test2_lock_0000000845 节点已经创建好了 
+/locks/test2_lock_0000000849 节点已经创建好了 
+Thread 20 正在等待锁 /locks/test2_lock_0000000827
+/locks/test2_lock_0000000825已解锁！ 
+/locks/test2_lock_0000000846 节点已经创建好了 
+/locks/test2_lock_0000000848 节点已经创建好了 
+/locks/test2_lock_0000000855 节点已经创建好了 
+/locks/test2_lock_0000000852 节点已经创建好了 
+/locks/test2_lock_0000000856 节点已经创建好了 
+/locks/test2_lock_0000000857 节点已经创建好了 
+/locks/test2_lock_0000000858 节点已经创建好了 
+Thread 58 正在等待锁 /locks/test2_lock_0000000829
+Thread 26 正在等待锁 /locks/test2_lock_0000000830
+Thread 40 正在等待锁 /locks/test2_lock_0000000831
+/locks/test2_lock_0000000859 节点已经创建好了 
+Thread 21 正在等待锁 /locks/test2_lock_0000000833
+/locks/test2_lock_0000000861 节点已经创建好了 
+Thread 64 正在等待锁 /locks/test2_lock_0000000839
+Thread 16 正在等待锁 /locks/test2_lock_0000000834
+/locks/test2_lock_0000000826已解锁！ 
+/locks/test2_lock_0000000863 节点已经创建好了 
+Thread 72 正在等待锁 /locks/test2_lock_0000000828
+Thread 56 正在运行
+/locks/test2_lock_0000000862 节点已经创建好了 
+/locks/test2_lock_0000000864 节点已经创建好了 
+/locks/test2_lock_0000000869 节点已经创建好了 
+Thread 17 正在等待锁 /locks/test2_lock_0000000837
+/locks/test2_lock_0000000878 节点已经创建好了 
+/locks/test2_lock_0000000865 节点已经创建好了 
+/locks/test2_lock_0000000867 节点已经创建好了 
+/locks/test2_lock_0000000860 节点已经创建好了 
+/locks/test2_lock_0000000870 节点已经创建好了 
+/locks/test2_lock_0000000879 节点已经创建好了 
+/locks/test2_lock_0000000877 节点已经创建好了 
+/locks/test2_lock_0000000871 节点已经创建好了 
+/locks/test2_lock_0000000876 节点已经创建好了 
+Thread 14 正在等待锁 /locks/test2_lock_0000000835
+Thread 22 正在等待锁 /locks/test2_lock_0000000832
+/locks/test2_lock_0000000880 节点已经创建好了 
+Thread 18 正在等待锁 /locks/test2_lock_0000000842
+/locks/test2_lock_0000000874 节点已经创建好了 
+/locks/test2_lock_0000000866 节点已经创建好了 
+Thread 25 正在等待锁 /locks/test2_lock_0000000838
+Thread 57 正在等待锁 /locks/test2_lock_0000000836
+/locks/test2_lock_0000000883 节点已经创建好了 
+/locks/test2_lock_0000000868 节点已经创建好了 
+Thread 71 正在等待锁 /locks/test2_lock_0000000841
+/locks/test2_lock_0000000875 节点已经创建好了 
+Thread 35 正在等待锁 /locks/test2_lock_0000000840
+/locks/test2_lock_0000000884 节点已经创建好了 
+/locks/test2_lock_0000000872 节点已经创建好了 
+/locks/test2_lock_0000000882 节点已经创建好了 
+/locks/test2_lock_0000000873 节点已经创建好了 
+Thread 39 正在等待锁 /locks/test2_lock_0000000852
+/locks/test2_lock_0000000881 节点已经创建好了 
+Thread 43 正在等待锁 /locks/test2_lock_0000000850
+Thread 24 正在等待锁 /locks/test2_lock_0000000848
+Thread 62 正在等待锁 /locks/test2_lock_0000000860
+Thread 38 正在等待锁 /locks/test2_lock_0000000858
+Thread 55 正在等待锁 /locks/test2_lock_0000000854
+Thread 60 正在等待锁 /locks/test2_lock_0000000844
+Thread 66 正在等待锁 /locks/test2_lock_0000000845
+Thread 52 正在等待锁 /locks/test2_lock_0000000843
+Thread 68 正在等待锁 /locks/test2_lock_0000000846
+Thread 46 正在等待锁 /locks/test2_lock_0000000857
+Thread 47 正在等待锁 /locks/test2_lock_0000000851
+Thread 41 正在等待锁 /locks/test2_lock_0000000856
+Thread 45 正在等待锁 /locks/test2_lock_0000000855
+Thread 73 正在等待锁 /locks/test2_lock_0000000847
+Thread 31 正在等待锁 /locks/test2_lock_0000000853
+/locks/test2_lock_0000000827已解锁！ 
+Thread 34 正在等待锁 /locks/test2_lock_0000000859
+Thread 19 正在等待锁 /locks/test2_lock_0000000883
+Thread 30 正在等待锁 /locks/test2_lock_0000000879
+Thread 23 正在等待锁 /locks/test2_lock_0000000881
+Thread 36 正在等待锁 /locks/test2_lock_0000000849
+Thread 53 正在等待锁 /locks/test2_lock_0000000864
+Thread 63 正在等待锁 /locks/test2_lock_0000000867
+Thread 51 正在等待锁 /locks/test2_lock_0000000872
+Thread 15 正在等待锁 /locks/test2_lock_0000000880
+Thread 59 正在等待锁 /locks/test2_lock_0000000871
+Thread 61 正在等待锁 /locks/test2_lock_0000000863
+Thread 37 正在等待锁 /locks/test2_lock_0000000861
+Thread 33 正在等待锁 /locks/test2_lock_0000000868
+Thread 29 正在等待锁 /locks/test2_lock_0000000877
+Thread 69 正在等待锁 /locks/test2_lock_0000000873
+Thread 50 正在等待锁 /locks/test2_lock_0000000869
+Thread 42 正在等待锁 /locks/test2_lock_0000000870
+Thread 44 正在等待锁 /locks/test2_lock_0000000878
+Thread 32 正在等待锁 /locks/test2_lock_0000000876
+Thread 27 正在等待锁 /locks/test2_lock_0000000882
+Thread 20 正在运行
+Thread 70 正在等待锁 /locks/test2_lock_0000000875
+Thread 65 正在等待锁 /locks/test2_lock_0000000865
+Thread 67 正在等待锁 /locks/test2_lock_0000000874
+Thread 49 正在等待锁 /locks/test2_lock_0000000866
+Thread 28 正在等待锁 /locks/test2_lock_0000000862
+/locks/test2_lock_0000000828已解锁！ 
+Thread 72 正在运行
+/locks/test2_lock_0000000829已解锁！ 
+Thread 58 正在运行
+/locks/test2_lock_0000000830已解锁！ 
+Thread 26 正在运行
+/locks/test2_lock_0000000831已解锁！ 
+Thread 40 正在运行
+/locks/test2_lock_0000000832已解锁！ 
+Thread 22 正在运行
+Thread 21 正在运行
+/locks/test2_lock_0000000833已解锁！ 
+/locks/test2_lock_0000000834已解锁！ 
+Thread 16 正在运行
+/locks/test2_lock_0000000835已解锁！ 
+Thread 14 正在运行
+/locks/test2_lock_0000000836已解锁！ 
+Thread 57 正在运行
+/locks/test2_lock_0000000837已解锁！ 
+Thread 17 正在运行
+/locks/test2_lock_0000000838已解锁！ 
+Thread 25 正在运行
+/locks/test2_lock_0000000839已解锁！ 
+Thread 64 正在运行
+/locks/test2_lock_0000000840已解锁！ 
+Thread 35 正在运行
+/locks/test2_lock_0000000841已解锁！ 
+Thread 71 正在运行
+/locks/test2_lock_0000000842已解锁！ 
+Thread 18 正在运行
+/locks/test2_lock_0000000843已解锁！ 
+Thread 52 正在运行
+/locks/test2_lock_0000000844已解锁！ 
+Thread 60 正在运行
+/locks/test2_lock_0000000845已解锁！ 
+Thread 66 正在运行
+/locks/test2_lock_0000000846已解锁！ 
+Thread 68 正在运行
+/locks/test2_lock_0000000847已解锁！ 
+Thread 73 正在运行
+/locks/test2_lock_0000000848已解锁！ 
+Thread 24 正在运行
+/locks/test2_lock_0000000849已解锁！ 
+Thread 36 正在运行
+/locks/test2_lock_0000000850已解锁！ 
+Thread 43 正在运行
+/locks/test2_lock_0000000851已解锁！ 
+Thread 47 正在运行
+/locks/test2_lock_0000000852已解锁！ 
+Thread 39 正在运行
+/locks/test2_lock_0000000853已解锁！ 
+Thread 31 正在运行
+Thread 55 正在运行
+/locks/test2_lock_0000000854已解锁！ 
+/locks/test2_lock_0000000855已解锁！ 
+Thread 45 正在运行
+/locks/test2_lock_0000000856已解锁！ 
+Thread 41 正在运行
+/locks/test2_lock_0000000857已解锁！ 
+Thread 46 正在运行
+/locks/test2_lock_0000000858已解锁！ 
+Thread 38 正在运行
+===Thread 11 正在运行
+/locks/test2_lock_0000000859已解锁！ 
+Thread 34 正在运行
+/locks/test1_lock_0000000824已解锁！ 
+Thread 62 正在运行
+/locks/test2_lock_0000000860已解锁！ 
+/locks/test2_lock_0000000861已解锁！ 
+Thread 37 正在运行
+/locks/test2_lock_0000000862已解锁！ 
+Thread 28 正在运行
+/locks/test2_lock_0000000863已解锁！ 
+Thread 61 正在运行
+/locks/test2_lock_0000000864已解锁！ 
+Thread 53 正在运行
+/locks/test2_lock_0000000865已解锁！ 
+Thread 65 正在运行
+/locks/test2_lock_0000000866已解锁！ 
+Thread 49 正在运行
+Thread 63 正在运行
+/locks/test2_lock_0000000867已解锁！ 
+Thread 33 正在运行
+/locks/test2_lock_0000000868已解锁！ 
+/locks/test2_lock_0000000869已解锁！ 
+Thread 50 正在运行
+Thread 42 正在运行
+/locks/test2_lock_0000000870已解锁！ 
+/locks/test2_lock_0000000871已解锁！ 
+Thread 59 正在运行
+Thread 51 正在运行
+/locks/test2_lock_0000000872已解锁！ 
+/locks/test2_lock_0000000873已解锁！ 
+Thread 69 正在运行
+/locks/test2_lock_0000000874已解锁！ 
+Thread 67 正在运行
+/locks/test2_lock_0000000875已解锁！ 
+Thread 70 正在运行
+/locks/test2_lock_0000000876已解锁！ 
+Thread 32 正在运行
+/locks/test2_lock_0000000877已解锁！ 
+Thread 29 正在运行
+/locks/test2_lock_0000000878已解锁！ 
+Thread 44 正在运行
+/locks/test2_lock_0000000879已解锁！ 
+Thread 30 正在运行
+/locks/test2_lock_0000000880已解锁！ 
+Thread 15 正在运行
+/locks/test2_lock_0000000881已解锁！ 
+Thread 23 正在运行
+/locks/test2_lock_0000000882已解锁！ 
+Thread 27 正在运行
+Thread 19 正在运行
+/locks/test2_lock_0000000883已解锁！ 
+/locks/test2_lock_0000000884已解锁！ 
+
+Process finished with exit code 0
