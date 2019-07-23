@@ -407,6 +407,326 @@ BlockingQueue 继承了 Queue 的实现；put 方法中有个阻塞的操作（I
 LinkedBlockingQueue 是链表结构；有两个构造器，一个是（Integer.MAX_VALUE)，无边界，另一个是(int capacity)，有边界；ArrayBlockingQueue 是数组结构；有边界。
 
 
+## 14、锁 LOCK
+### 14.1 请说明 ReentrantLock 与 ReentrantReadWriteLock 的区别？
+
+- ReentrantLock虽然可以灵活地实现线程安全，但是他是一种完全互斥锁，即某一时刻永远只允许一个线程访问共享资源，不管是读数据的线程还是写数据的线程。这导致的结果就是，效率低下。
+- ReentrantReadWriteLock中维护了读锁和写锁。允许线程同时读取共享资源；但是如果有一个线程是写数据，那么其他线程就不能去读写该资源。即会出现三种情况：读读共享，写写互斥，读写互斥。
+
+
+### 14.2 请解释 ReentrantLock 为什么命名为重进入？
+一个线程是否可多次获得同一个锁
+
+方法a和方法b被相同可重入锁锁定，a方法里调用了b方法，线程1调用a方法，如果是不可重入锁，会在b方法处阻塞，而可重入锁，由于ab方法持有的锁和调用线程一样，所以可以无阻碍执行。
+
+### 14.3 请说明 Lock#lock() 与 Lock#lockInterruptibly() 的区别？
+Lock()提供了无条件地轮询获取锁的方式，lockInterruptibly()提供了可中断的锁获取方式。
+
+- lock： lock获取锁过程中，忽略了中断，在成功获取锁之后，再根据中断标识处理中断，即selfInterrupt中断自己。acquireQueued，在for循环中无条件重试获取锁，直到成功获取锁，同时返回线程中断状态。该方法通过for循正常返回时，必定是成功获取到了锁。
+- lockInterruptibly： 可中断加锁，即在锁获取过程中不处理中断状态，而是直接抛出中断异常，由上层调用者处理中断。源码细微差别在于锁获取这部分代码，这个方法与acquireQueue差别在于方法的返回途径有两种，一种是for循环结束，正常获取到锁；另一种是线程被唤醒后检测到中断请求，则立即抛出中断异常，该操作导致方法结束。
+
+## 15、条件变量 CONDITION
+### 15.1 请举例说明 Condition 使用场景？
+- CoutDownLatch (condition 变种)
+- CyclicBarrier (循环屏障)
+- 信号量/灯（Semaphore) java 9
+- 生产者和消费者
+- 阻塞队列
+
+### 15.2 请解释 Condition await() 和 signal() 与 Object wait() 和 notify() 的相同与差异？
+- 相同点：都是阻塞和释放
+- 不同点： Java Thread 对象和实际 JVM 执行的 OS Thread 不是相同对象，JVM Thread 回调 Java Thread.run() 方法，同时 Thread 提供一些 native 方法来获取 JVM Thread 状态，当JVM thread 执行后，自动 notify()了。
+
+		while (thread.isAlive()) { // Thread 特殊的 Object
+	            // 当线程 Thread isAlive() == false 时，thread.wait() 操作会被自动释放
+	            synchronized (thread) {
+	                try {
+	                    thread.wait(); // 到底是谁通知 Thread -> thread.notify();
+						// LockSupport.park(); // 死锁发生
+	                } catch (Exception e) {
+	                    throw new RuntimeException(e);
+	                }
+	            }
+
+
+## 16、屏障 BARRIERS
+### 16.1 请说明 CountDownLatch 与 CyclicBarrier 的区别？
+
+- CountDownLatch计数器只能使用一次。CyclicBarrier则可以调用其reset()方法进行重置多次使用。
+- CountDownLatch使用countDown()+await()进行处理，需要通过countDown的次数到设置的次数，其await()才不会阻塞，往往是一个主线程中使用CountDownLatch然后控制所有子线程。CyclicBarrier的同步屏障是针对对应的子线程的，但同时设置了new CyclicBarrier(N)也需要对应N次的线程(部分主子线程)来执行await()，才能继续执行await()后面的代码。
+
+### 16.2 请说明 Semaphore 的使用场景？
+
+Semaphore，是JDK1.5的java.util.concurrent并发包中提供的一个并发工具类。
+
+Semaphore经常用于限制获取某种资源的线程数量。
+
+### 16.3 请通过 Java 1.4 的语法实现一个 CountDownLatch ？
+
+	import java.util.concurrent.ExecutorService;
+	import java.util.concurrent.Executors;
+	import java.util.concurrent.locks.Condition;
+	import java.util.concurrent.locks.Lock;
+	import java.util.concurrent.locks.ReentrantLock;
+	
+	public class LegacyCountDownLatchDemo {
+	
+	    public static void main(String[] args) throws InterruptedException {
+	
+	        // 倒数计数 5
+	        MyCountDownLatch latch = new MyCountDownLatch(5);
+	
+	        ExecutorService executorService = Executors.newFixedThreadPool(5);
+	
+	        for (int i = 0; i < 5; i++) {
+	            executorService.submit(() -> {
+	                action();
+	                latch.countDown(); // -1
+	            });
+	        }
+	
+	        // 等待完成
+	        // 当计数 > 0，会被阻塞
+	        latch.await();
+	
+	        System.out.println("Done");
+	
+	        // 关闭线程池
+	        executorService.shutdown();
+	    }
+	
+	    private static void action() {
+	        System.out.printf("线程[%s] 正在执行...\n", Thread.currentThread().getName());  // 2
+	    }
+	
+	    /**
+	     * Java 1.5+ Lock 实现
+	     */
+	    private static class MyCountDownLatch {
+	
+	        private int count;
+	        private final Lock lock = new ReentrantLock();
+	        private final Condition condition = lock.newCondition();
+	
+	        private MyCountDownLatch(int count) {
+	            this.count = count;
+	        }
+	        public void await() throws InterruptedException {
+	            // 当 count > 0 等待
+	            if (Thread.interrupted()) {
+	                throw new InterruptedException();
+	            }
+	
+	            lock.lock();
+	            try {
+	                while (count > 0) {
+	                    condition.await(); // 阻塞当前线程
+	                }
+	            } finally {
+	                lock.unlock();
+	            }
+	        }
+	        public void countDown() {
+	
+	            lock.lock();
+	            try {
+	                if (count < 1) {
+	                    return;
+	                }
+	                count--;
+	                if (count < 1) { // 当数量减少至0时，唤起被阻塞的线程
+	                    condition.signalAll();
+	                }
+	            } finally {
+	                lock.unlock();
+	            }
+	        }
+	    }
+	
+	    /**
+	     * Java < 1.5 实现
+	     */
+	    private static class LegacyCountDownLatch {
+	        private int count;
+	        private LegacyCountDownLatch(int count) {
+	            this.count = count;
+	        }
+	
+	        public void await() throws InterruptedException {
+	            // 当 count > 0 等待
+	            if (Thread.interrupted()) {
+	                throw new InterruptedException();
+	            }
+
+	            synchronized (this) {
+	                while (count > 0) {
+	                    wait(); // 阻塞当前线程
+	                }
+	            }
+	        }
+	        public void countDown() {
+	            synchronized (this) {
+	                if (count < 1) {
+	                    return;
+	                }
+	                count--;
+	                if (count < 1) { // 当数量减少至0时，唤起被阻塞的线程
+	                    notifyAll();
+	                }
+	            }
+	        }
+	    }
+	}
+
+## 17、线程池 THREAD POOL
+### 17.1 请问 J.U.C 中内建了几种 ExecutorService 实现？
+
+1.5：ThreadPoolExecutor、ScheduledThreadPoolExecutor
+
+1.7：ForkJoinPool
+
+### 17.2 请分别解释 ThreadPoolExecutor 构造器参数在运行时的作用？
+
+- corePoolSize：核心线程数量，当有新任务在execute()方法提交时，会执行以下判断：
+
+	- 如果运行的线程少于 corePoolSize，则创建新线程来处理任务，即使线程池中的其他线程是空闲的；
+	- 如果线程池中的线程数量大于等于 corePoolSize 且小于 maximumPoolSize，则只有当workQueue满时才创建新的线程去处理任务；
+	- 如果设置的corePoolSize 和 maximumPoolSize相同，则创建的线程池的大小是固定的，这时如果有新任务提交，若workQueue未满，则将请求放入workQueue中，等待有空闲的线程去从workQueue中取任务并处理；
+	- 如果运行的线程数量大于等于maximumPoolSize，这时如果workQueue已经满了，则通过handler所指定的策略来处理任务；
+
+- maximumPoolSize：最大线程数量；
+- workQueue：等待队列，当任务提交时，如果线程池中的线程数量大于等于corePoolSize的时候，把该任务封装成一个Worker对象放入等待队列；
+- keepAliveTime: 超时时间。
+- threadFactory：它是ThreadFactory类型的变量，用来创建新线程。默认使用Executors.defaultThreadFactory() 来创建线程。使用默认的ThreadFactory来创建线程时，会使新创建的线程具有相同的NORM_PRIORITY优先级并且是非守护线程，同时也设置了线程的名称。
+- handler：它是RejectedExecutionHandler类型的变量，表示线程池的饱和策略。如果阻塞队列满了并且没有空闲的线程，这时如果继续提交任务，就需要采取一种策略处理该任务。线程池提供了4种策略：
+	- AbortPolicy：直接抛出异常，这是默认策略；
+	- CallerRunsPolicy：用调用者所在的线程来执行任务；
+	- DiscardOldestPolicy：丢弃阻塞队列中靠最前的任务，并执行当前任务；
+	- DiscardPolicy：直接丢弃任务；
+	-  当然也可以根据应用场景实现 RejectedExecutionHandler 接口，自定义饱和策略，如记录日志或持久化存储不能处理的任务
+
+### 17.3 如何获取 ThreadPoolExecutor 正在运行的线程？
+
+覆写ThreadPoolExecutor的beforeExecute和afterExecute方法可以做到，但是不是很好，因为这两个方法被限定在ExecutorPool里面，因为有的框架(例如netty)并没有继承ThreadPoolExector这个类，而是继承了AbstractExecutorService，此时就没有before和after的方法。
+
+下面来看另一种方法：通过ThreadFactory来实现
+
+	public class ThreadPoolExecutorThreadQuestion {
+	
+	    public static void main(String[] args) throws InterruptedException {
+	        ExecutorService executorService = Executors.newCachedThreadPool();
+	
+	        Set<Thread> threadsContainer = new HashSet<>();
+	        setThreadFactory(executorService, threadsContainer);
+	        for(int i=0;i<9;i++){
+	            executorService.submit(()->{
+	
+	            });
+	        }
+	        // 线程池等待执行 3 ms
+	        executorService.awaitTermination(3, TimeUnit.MILLISECONDS);
+	        threadsContainer.stream()
+	                .filter(Thread::isAlive)
+	                .forEach(thread -> {
+	                    System.out.println("线程池创造的线程 : " + thread);
+	                });
+	        Thread mainThread = Thread.currentThread();
+	        ThreadGroup mainThreadGroup = mainThread.getThreadGroup();
+	        int count = mainThreadGroup.activeCount();
+	        Thread[] threads = new Thread[count];
+	        mainThreadGroup.enumerate(threads, true);
+	
+	        Stream.of(threads)
+	                .filter(Thread::isAlive)
+	                .forEach(thread -> {
+	                    System.out.println("线程 : " + thread);
+	                });
+	        // 关闭线程池
+	        executorService.shutdown();
+	
+	    }
+	
+	    private static void setThreadFactory(ExecutorService executorService, Set<Thread> threadsContainer) {
+	        if (executorService instanceof ThreadPoolExecutor) {
+	            ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) executorService;
+	            ThreadFactory oldThreadFactory = threadPoolExecutor.getThreadFactory();
+	            threadPoolExecutor.setThreadFactory(new DelegatingCountFactory(oldThreadFactory, threadsContainer));
+	        }
+	    }
+	    private static class DelegatingCountFactory implements ThreadFactory {
+	        private final ThreadFactory delegate;
+	        private final Set<Thread> threadsContainer;
+	        private DelegatingCountFactory(ThreadFactory delegate, Set<Thread> threadsContainer) {
+	            this.delegate = delegate;
+	            this.threadsContainer = threadsContainer;
+	        }
+	        @Override
+	        public Thread newThread(Runnable r) {
+	            Thread thread = delegate.newThread(r);
+	            // cache thread
+	            threadsContainer.add(thread);
+	            return thread;
+	        }
+	    }
+	}
 
 
 
+## 18、FUTURE
+### 18.1 如何获取 Future 对象？
+
+一旦我们拥有了一个ExecutorService对象，我们只需要调用submit()方法，把Callable作为参数传递给它。submit()方法会负责该任务的启动以及返回一个FutureTask对象。这个FutureTask对象是Future接口的一个实现。
+
+### 18.2 请举例 Future get() 以及 get(long,TimeUnit) 方法的使用场景？
+不带参数的get方法是阻塞方法，只要线程为返回结果就会一直阻塞直到有结果为止。
+
+get(long,TimeUnit) 是超时等待，若指定时间内还没有得到线程返回值，会抛出TimeoutException的异常
+
+
+
+### 18.3 如何利用 Future 优雅地取消一个任务的执行？
+可以使用Future.cancel(boolean) 方法去告诉该executor停止操作并且中断它潜在的线程：
+
+Future future = newSquareCalculator().calculate(4);
+booleancanceled = future.cancel(true);
+
+上述例子中的Future实例，不会结束他的运算操作。事实上，如果我们试图在调用cancel()方法之后，调用该实例的get()方法的话，将会产生一个CancelllationException异常。Future.isCancelled()将会告诉我们，是否Future已经被取消了。这对于避免CancellationException异常很有帮助。
+
+在我们调用cancel()方法时，是有可能失败的。在这种情况下，它的返回值将是false.请注意：cancel()方法会接收一个Boolean值作为参数-它会控制正在执行该task的线程是否应该被中断。
+
+## 19、VOLATILE 变量
+### 19.1 在 Java 中，volatile 保证的是可见性还是原子性？
+
+volatile 既有可见性又有原子性，可见性是一定的，原子性是看情况的。对象类型和原生类型都是可见性，原生类型是原子性。原生类型例如int 、double等。用volatile修饰long和double可以保证其操作原子性。
+
+### 19.2 在 Java 中，volatile long 和 double 是线程安全的吗？ 
+是线程安全的
+
+
+### 193 在 Java 中，volatile 的底层实现是基于什么机制？
+
+volatile的底层是通过lock前缀指令、内存屏障来实现的。
+
+lock前缀指令其实就相当于一个内存屏障。内存屏障是一组CPU处理指令，用来实现对内存操作的顺序限制。volatile的底层就是通过内存屏障来实现的。
+
+编译器和执行器 可以在保证输出结果一样的情况下对指令重排序，使性能得到优化。插入一个内存屏障，相当于告诉CPU和编译器先于这个命令的必须先执行，后于这个命令的必须后执行。
+
+
+## 20、原子操作 ATOMIC
+### 20.1 为什么 AtomicBoolean 内部变量使用 int 实现，而非 boolean？
+操作系统有 X86 和 X64,底层是用C语言实现的，在C语言中是没有boolean类型的，用的是0或1来表示boolean类型，0表示false，1表示true，也就是说0表示假，非0表示真。与其说在调用底层的时候将Java中的value（true和false）转换为0或1还不如在一开始记录value的时候，就将value用int型来记录，这样就省去转换的步骤，而且避免了不必要的错误。
+
+
+### 20.2 在变量原子操作时，Atomic* CAS 操作比 synchronized 关键字那个更重？
+
+synchronized更重。
+
+单线程的时候，synchronized 更快；而多线程的时候则要分情况讨论。cas在竞争激烈的时候速度反而下降。不难想象反复的失败重试。
+
+CAS 操作也是相对重的操作，它也是实现 synchronized 瘦锁(thin lock)的关键，偏向锁就是避免 CAS（Compare And Set/Swap)操作。
+
+
+### 20.3 Atomic* CAS 的底层是如何实现的？
+- JAVA中的CAS操作都是通过sun包下Unsafe类实现，而Unsafe类中的方法都是native方法，由JVM本地实现。Unsafe中对CAS的实现是C++写的，最后调用的是Atomic:comxchg这个方法，这个方法的实现放在hotspot下的os_cpu包中，说明这个方法的实现和操作系统、CPU都有关系。
+
+- Linux的X86下主要是通过cmpxchgl这个指令在CPU级完成CAS操作的，但在多处理器情况下必须使用lock指令加锁来完成。
