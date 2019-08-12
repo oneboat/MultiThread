@@ -4,9 +4,9 @@
 
 - 2.实现Runnable接口，并重写里面的run方法
 
-- 3 .应用程序可以使用Executor框架来创建线程池。Executor框架是juc里提供的线程池的实现。
+在jdk的源码中已经写的很清楚了，一共有2种方式：
 
-- 4.实现Callable接口通过FutureTask包装器来创建Thread线程
+![image](./创建线程的两种方式.png)
 
 ### 1.2、如何通过 Java 创建进程？
 - 通过 Runtime 类的 exec() 方法来创建进程
